@@ -31,3 +31,44 @@ jobs:
       - name: Run test suite
         run: |
           pytest
+
+  docker:
+    name: Validate Docker Container
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t deployforge:test .
+
+      - name: Start Docker container
+        run: |
+          docker run -d --name deployforge-test -p 8000:8000 deployforge:test
+
+      - name: Test application health endpoint
+        run: |
+          # Wait briefly for application to initialize
+          sleep 5
+
+          # Verify that the /health endpoint returns HTTP 200
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health)
+          echo "Health check HTTP status: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Health check failed: expected HTTP 200, got $HTTP_STATUS"
+            echo "Container logs:"
+            docker logs deployforge-test
+            exit 1
+          fi
+
+          echo "Health check passed: $(curl -s http://localhost:8000/health)"
+
+      - name: Clean up test container
+        if: always()
+        run: |
+          docker stop deployforge-test || true
+          docker rm deployforge-test || true
