@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Automated AWS Deployment Platform
 
 A production-style cloud deployment platform demonstrating an end-to-end containerized DevOps workflow for AWS.
@@ -115,3 +116,7 @@ Subsequent phases of this project will introduce full automated cloud delivery:
 - **Terraform:** Infrastructure as Code (IaC) to provision and manage AWS resources (VPC, subnets, Application Load Balancers, Security Groups, and ECS services).
 - **Amazon ECS (Elastic Container Service):** Serverless container execution using AWS Fargate for scalability, high availability, and isolation.
 - **Automated Deployment:** Zero-downtime rolling deployments triggered automatically whenever changes are merged into the main branch.
+=======
+# DeployForge-Automated-AWS-CI-CD-Platform
+Automated CI/CD platform that containerizes a FastAPI application and deploys it to AWS using GitHub Actions, Docker, Terraform, and ECS.
+>>>>>>> origin/main
