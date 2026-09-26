@@ -1,0 +1,19 @@
+# DeployForge Terraform Variables Example
+# Copy this file to terraform.tfvars and customize if needed:
+# cp terraform.tfvars.example terraform.tfvars
+
+aws_region     = "ap-south-1"
+project_name   = "deployforge"
+environment    = "dev"
+container_port = 8000
+task_cpu       = "256"
+task_memory    = "512"
+image_tag      = "latest"
+
+# Networking
+vpc_cidr            = "10.0.0.0/16"
+public_subnet_cidr  = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+nat_instance_type   = "t3.micro"
+
+
