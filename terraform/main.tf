@@ -377,6 +377,12 @@ resource "aws_instance" "nat" {
               #!/bin/bash
               set -euo pipefail
 
+              # Install iptables for NAT
+              dnf install -y iptables-services || {
+              echo "ERROR: Failed to install iptables-services"
+             exit 1
+}
+
               # Enable persistent IP forwarding in sysctl
               echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/99-nat.conf
               sysctl -p /etc/sysctl.d/99-nat.conf
@@ -422,14 +428,26 @@ resource "aws_instance" "nat" {
               Type=oneshot
               ExecStart=/usr/local/sbin/configure-nat.sh
               RemainAfterExit=yes
+              StandardOutput=journal
+              StandardError=journal
 
               [Install]
               WantedBy=multi-user.target
               SYSTEMD
 
-              systemctl daemon-reload
-              systemctl enable --now nat.service
+             systemctl daemon-reload
+             systemctl enable nat.service
+
+             if ! systemctl start nat.service; then
+             echo "ERROR: NAT service failed to start"
+             systemctl status nat.service --no-pager || true
+             journalctl -u nat.service --no-pager -n 50 || true
+             exit 1
+           fi
+
+echo "NAT service started successfully"
               EOF
+
 
   tags = {
     Name = "${var.project_name}-${var.environment}-nat-instance"
