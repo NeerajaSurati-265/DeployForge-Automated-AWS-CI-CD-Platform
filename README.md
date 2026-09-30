@@ -117,6 +117,43 @@ Subsequent phases of this project will introduce full automated cloud delivery:
 - **Amazon ECS (Elastic Container Service):** Serverless container execution using AWS Fargate for scalability, high availability, and isolation.
 - **Automated Deployment:** Zero-downtime rolling deployments triggered automatically whenever changes are merged into the main branch.
 =======
-# DeployForge-Automated-AWS-CI-CD-Platform
-Automated CI/CD platform that containerizes a FastAPI application and deploys it to AWS using GitHub Actions, Docker, Terraform, and ECS.
->>>>>>> origin/main
+
+# What I Learned
+
+This project provided hands-on experience with:
+
+- Infrastructure as Code
+- AWS VPC networking
+- Public and private subnets
+- Route tables
+- NAT architecture
+- EC2 networking
+- Source/Destination Check
+- Docker containerization
+- CI pipelines
+- Amazon ECR
+- Amazon ECS
+- IAM roles
+- CloudWatch
+- Terraform state management
+- Cloud-init
+- Linux systemd services
+- iptables
+- Cloud infrastructure troubleshooting
+
+One of the main learning outcomes was understanding that provisioning cloud infrastructure is only part of the process. Verifying connectivity and troubleshooting failures at the Linux, AWS networking, and infrastructure layers is equally important.
+
+---
+
+# Future Improvements
+
+- Complete NAT Instance troubleshooting
+- Validate private-subnet outbound connectivity
+- Complete automated ECS deployment from ECR
+- Add deployment verification
+- Add automated rollback
+- Add Terraform security scanning
+- Add container security scanning
+- Add automated Terraform validation
+- Improve deployment observability
+- Add separate development and production environments
