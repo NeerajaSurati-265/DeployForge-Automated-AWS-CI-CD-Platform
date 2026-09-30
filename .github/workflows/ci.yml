@@ -91,6 +91,14 @@ jobs:
           docker push \
             847460071971.dkr.ecr.ap-south-1.amazonaws.com/deployforge-dev:latest
 
+      - name: Deploy to Amazon ECS
+        run: |
+          aws ecs update-service \
+            --cluster deployforge-dev-cluster \
+            --service deployforge-dev-service \
+            --force-new-deployment \
+            --region ap-south-1
+
 
       - name: Clean up test container
         if: always()
