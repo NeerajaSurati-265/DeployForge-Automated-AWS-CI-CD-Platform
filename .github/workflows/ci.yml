@@ -51,6 +51,10 @@ jobs:
           role-to-assume: arn:aws:iam::847460071971:role/DeployForge-GitHubActions-Role
           aws-region: ap-south-1
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Build Docker image
         run: |
           docker build -t deployforge:test .
