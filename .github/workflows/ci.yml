@@ -81,6 +81,17 @@ jobs:
 
           echo "Health check passed: $(curl -s http://localhost:8000/health)"
 
+      - name: Tag Docker image for ECR
+        run: |
+          docker tag deployforge:test \
+            847460071971.dkr.ecr.ap-south-1.amazonaws.com/deployforge-dev:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push \
+            847460071971.dkr.ecr.ap-south-1.amazonaws.com/deployforge-dev:latest
+
+
       - name: Clean up test container
         if: always()
         run: |
